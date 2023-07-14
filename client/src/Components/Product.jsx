@@ -1,10 +1,9 @@
 // import React from 'react'
 
 import { NavLink } from "react-router-dom";
-import PriceFormator from "../helpers/priceFormator";
+import PriceFormator from "../helpers/PriceFormator";
 
 const Product = (curElem) => {
-  console.log(curElem);
   //destructuring
   const { id, name, image, price, category } = curElem;
   return (

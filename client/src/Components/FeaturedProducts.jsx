@@ -5,9 +5,6 @@ import { styled } from "styled-components";
 
 const FeaturedProducts = () => {
   const { isLoading, featureProducts } = useProductContext();
-  {
-    console.log(featureProducts);
-  }
   if (isLoading) {
     return <div className="page_loading">.......Loading</div>;
   }
@@ -20,7 +17,6 @@ const FeaturedProducts = () => {
         <div className="grid grid-three-column">
           {featureProducts &&
             featureProducts.map((currElem) => {
-              console.log({ currElem });
               return <Product key={currElem.id} {...currElem} />;
             })}
         </div>

@@ -11,7 +11,7 @@ import Trusted from "./Components/Trusted";
 import FeaturedProducts from "./Components/FeaturedProducts";
 const Home = () => {
   const data = {
-    name: "Osama Shop",
+    name: "QickClick",
   };
   const Home = styled.section``;
   return (

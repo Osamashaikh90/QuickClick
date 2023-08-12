@@ -1,5 +1,6 @@
 // import React from 'react'
 import { styled } from "styled-components";
+
 const Trusted = () => {
   return (
     <Wrapper className="brand-section">
@@ -7,34 +8,19 @@ const Trusted = () => {
         <h3>Trusted By 1000+ Companies</h3>
         <div className="brand-section-slider">
           <div className="slide">
-            <img
-              src="https://raw.githubusercontent.com/solodev/infinite-logo-carousel/master/images/image2.png"
-              alt="trusted-brands"
-            />
+            <img src="./images/image2.png" alt="trusted-brands" />
           </div>
           <div className="slide">
-            <img
-              src="https://raw.githubusercontent.com/solodev/infinite-logo-carousel/master/images/image3.png"
-              alt="trusted-brands"
-            />
+            <img src="./images/image3.png" alt="trusted-brands" />
           </div>
           <div className="slide">
-            <img
-              src="https://raw.githubusercontent.com/solodev/infinite-logo-carousel/master/images/image4.png"
-              alt="trusted-brands"
-            />
+            <img src="./images/image4.png" alt="trusted-brands" />
           </div>
           <div className="slide">
-            <img
-              src="https://raw.githubusercontent.com/solodev/infinite-logo-carousel/master/images/image6.png"
-              alt="trusted-brands"
-            />
+            <img src="./images/image6.png" alt="trusted-brands" />
           </div>
           <div className="slide">
-            <img
-              src="https://raw.githubusercontent.com/solodev/infinite-logo-carousel/master/images/image8.png"
-              alt="trusted-brands"
-            />
+            <img src="./images/image8.png" alt="trusted-brands" />
           </div>
         </div>
       </div>

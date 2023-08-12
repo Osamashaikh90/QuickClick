@@ -1,11 +1,15 @@
+/* eslint-disable react/prop-types */
 // import React from 'react'
 import { useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import { FaCheck } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { Button } from "../styles/Button";
 import CartAmountToggle from "./CartAmountToggle";
+import { useCartContext } from "../context/cartContext";
+
 const AddToCart = ({ product }) => {
+  const { addToCart } = useCartContext();
   const { id, colors, stock } = product;
   const [color, setColor] = useState(colors[0]);
   const [amount, setAmount] = useState(1);
@@ -42,7 +46,7 @@ const AddToCart = ({ product }) => {
         setDecrease={setDecrease}
         setIncrease={setIncrease}
       />
-      <NavLink to="/cart">
+      <NavLink to="/cart" onClick={() => addToCart(id, color, amount, product)}>
         <Button>Add To Cart</Button>
       </NavLink>
     </Wrapper>
@@ -75,7 +79,6 @@ const Wrapper = styled.section`
     width: 2.5rem;
     opacity: 1;
   }
-
   .checkStyle {
     font-size: 1rem;
     color: #fff;

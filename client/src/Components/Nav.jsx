@@ -2,7 +2,8 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
-import { CgMenu, CgClose } from "react-icons/cg";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineClose } from "react-icons/ai";
 import { useCartContext } from "../context/cartContext";
 import { Button } from "../styles/Button";
 
@@ -245,12 +246,12 @@ const Nav = () => {
           </ul>
           <div className="mobile-navbar-btn">
             {/* If we dont pass anonymous function it will render again and again */}
-            <CgMenu
+            <GiHamburgerMenu
               name="menu-outline"
               className="mobile-nav-icon"
               onClick={() => setMenuIcon(true)}
             />
-            <CgClose
+            <AiOutlineClose
               name="close-outline"
               className="mobile-nav-icon close-outline"
               onClick={() => setMenuIcon(false)}

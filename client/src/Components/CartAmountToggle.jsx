@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // import React from 'react'
 import styled from "styled-components";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -40,7 +41,7 @@ const Wrapper = styled.section`
     }
 
     .amount-style {
-      font-size: 2.4rem;
+      font-size: 2.2rem;
       color: ${({ theme }) => theme.colors.btn};
     }
 `;

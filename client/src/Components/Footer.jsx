@@ -2,7 +2,6 @@
 import { styled } from "styled-components";
 import { Button } from "../styles/Button";
 import { NavLink } from "react-router-dom";
-import { AiFillLock } from "react-icons/Ai";
 const Footer = () => {
   const Wrapper = styled.section`
     .iSIFGq {
@@ -112,10 +111,6 @@ const Footer = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Laboriosam provident mollitia.
             </p>
-            <div>
-              <AiFillLock />
-              <span>Secure Payment.</span>
-            </div>
           </div>
           <div className="footer-about">
             <h3>Categories</h3>
@@ -123,10 +118,6 @@ const Footer = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Laboriosam provident mollitia.
             </p>
-            <div>
-              <AiFillLock />
-              <span>Secure Payment.</span>
-            </div>
           </div>
           <div className="footer-about">
             <h3>Informations</h3>
@@ -134,10 +125,6 @@ const Footer = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Laboriosam provident mollitia.
             </p>
-            <div>
-              <AiFillLock />
-              <span>Secure Payment.</span>
-            </div>
           </div>
           <div className="footer-social">
             <h3>Connect with Us</h3>
@@ -145,10 +132,6 @@ const Footer = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Laboriosam provident mollitia.
             </p>
-            <div>
-              <AiFillLock />
-              <span>Secure Payment.</span>
-            </div>
           </div>
         </div>
         <hr />

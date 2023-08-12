@@ -3,6 +3,7 @@ import Home from "./Home";
 import About from "./About";
 import Cart from "./Cart";
 import Contact from "./Contact";
+import Login from "./Login";
 import ErrorPage from "./ErrorPage";
 import Products from "./Products";
 import SingleProduct from "./SingleProduct";
@@ -10,6 +11,8 @@ import { GlobalStyle } from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import Header from "./Components/header";
 import Footer from "./Components/Footer";
+import Register from "./Register";
+import HideNavLayout from "../layout/HideNavLayout";
 const App = () => {
   const theme = {
     colors: {
@@ -39,17 +42,23 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <GlobalStyle />
-        <Header />
+        <HideNavLayout>
+          <Header />
+        </HideNavLayout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/products" element={<Products />} />
           <Route path="/singleproduct/:id" element={<SingleProduct />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-        <Footer />
+        <HideNavLayout>
+          <Footer />
+        </HideNavLayout>
       </BrowserRouter>
     </ThemeProvider>
   );

@@ -9,7 +9,7 @@ import Products from "./Products";
 import SingleProduct from "./SingleProduct";
 import { GlobalStyle } from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
-import Header from "./Components/header";
+import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Register from "./Register";
 import HideNavLayout from "../layout/HideNavLayout";

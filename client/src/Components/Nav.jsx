@@ -3,10 +3,21 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/Cg";
+import { useCartContext } from "../context/cartContext";
+import { Button } from "../styles/Button";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
+  const { total_item } = useCartContext();
   const Nav = styled.nav`
+    .btn-login {
+      padding: 0.5rem 1.5rem;
+      /* width: 100%; */
+      border-radius: 6px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
     .navbar-lists {
       display: flex;
       gap: 4rem;
@@ -205,12 +216,30 @@ const Nav = () => {
             </li>
             <li>
               <NavLink
+                to="/login"
+                className="navbar-link home-link"
+                onClick={() => setMenuIcon(false)}
+              >
+                <Button className="btn-login">Log In</Button>
+              </NavLink>
+            </li>
+            {/* <li>
+              <NavLink
+                to="/Login"
+                className="navbar-link home-link"
+                onClick={() => setMenuIcon(false)}
+              >
+                <Button>Log Out</Button>
+              </NavLink>
+            </li> */}
+            <li>
+              <NavLink
                 to="/cart"
                 className="navbar-link  cart-icon--link "
                 onClick={() => setMenuIcon(false)}
               >
                 <FiShoppingCart className="cart-icon" />
-                <span className="cart-total--item">10</span>
+                <span className="cart-total--item">{total_item}</span>
               </NavLink>
             </li>
           </ul>

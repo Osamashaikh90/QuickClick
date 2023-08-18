@@ -4,7 +4,7 @@ import reducer from "../reducer/cartReducer";
 const CartContext = createContext();
 const getLocalCartData = () => {
   let newCardData = localStorage.getItem("QuickClickCart");
-  if (newCardData === []) {
+  if (newCardData == []) {
     return [];
   } else {
     return JSON.parse(newCardData);

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AiOutlineClose } from "react-icons/ai";
+import { MdClose } from "react-icons/md";
 import { useCartContext } from "../context/cartContext";
 import { Button } from "../styles/Button";
 
@@ -251,7 +251,7 @@ const Nav = () => {
               className="mobile-nav-icon"
               onClick={() => setMenuIcon(true)}
             />
-            <AiOutlineClose
+            <MdClose
               name="close-outline"
               className="mobile-nav-icon close-outline"
               onClick={() => setMenuIcon(false)}

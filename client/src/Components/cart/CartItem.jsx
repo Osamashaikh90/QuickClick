@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 // import React from 'react'
-import PriceFormator from "../helpers/PriceFormator";
+import PriceFormator from "../../helpers/PriceFormator";
 import CartAmountToggle from "./CartAmountToggle";
 import { FaTrash } from "react-icons/fa";
-import { useCartContext } from "../context/cartContext";
+import { useCartContext } from "../../context/cartContext";
 const CartItem = ({ id, image, name, color, price, amount }) => {
   const { removeProduct, setIncrease, setDecrease } = useCartContext();
   return (

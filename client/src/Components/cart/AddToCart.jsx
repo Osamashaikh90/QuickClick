@@ -4,9 +4,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import { FaCheck } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { Button } from "../styles/Button";
+import { Button } from "../../styles/Button";
 import CartAmountToggle from "./CartAmountToggle";
-import { useCartContext } from "../context/cartContext";
+import { useCartContext } from "../../context/cartContext";
 
 const AddToCart = ({ product }) => {
   const { addToCart } = useCartContext();

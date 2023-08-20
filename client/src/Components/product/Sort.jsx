@@ -1,7 +1,7 @@
 // import React from 'react'
 import styled from "styled-components";
 import { BsFillGridFill, BsList } from "react-icons/bs";
-import { useFilterContext } from "../context/FilterContext";
+import { useFilterContext } from "../../context/FilterContext";
 const Sort = () => {
   const { filter_products, grid_view, setGridView, setListView, sorting } =
     useFilterContext();

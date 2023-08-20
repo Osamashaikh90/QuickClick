@@ -1,9 +1,9 @@
 // import React from 'react'
 import styled from "styled-components";
-import { useFilterContext } from "../context/FilterContext";
+import { useFilterContext } from "../../context/FilterContext";
 import { FaCheck } from "react-icons/fa";
-import PriceFormator from "../helpers/PriceFormator";
-import { Button } from "../styles/Button";
+import PriceFormator from "../../helpers/PriceFormator";
+import { Button } from "../../styles/Button";
 const FilterSection = () => {
   const {
     filters: { text, colors, price, maxPrice, minPrice },

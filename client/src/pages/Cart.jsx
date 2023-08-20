@@ -1,10 +1,10 @@
 // import React from 'react'
 import { NavLink } from "react-router-dom";
-import CartItem from "./Components/CartItem";
-import { useCartContext } from "./context/cartContext";
+import CartItem from "../components/cart/CartItem";
+import { useCartContext } from "../context/cartContext";
 import styled from "styled-components";
-import { Button } from "./styles/Button";
-import PriceFormator from "./helpers/PriceFormator";
+import { Button } from "../styles/Button";
+import PriceFormator from "../helpers/PriceFormator";
 const Cart = () => {
   const { cart, clearCart, total_price, shipping_fee } = useCartContext();
   if (cart.length === 0) {

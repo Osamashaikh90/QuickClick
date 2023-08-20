@@ -1,33 +1,26 @@
+// import React from 'react'
 import { NavLink } from "react-router-dom";
-import avatar from "/images/logo.png";
 import styled from "styled-components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
-import { registerValidate } from "./helpers/Validate";
-import { useState } from "react";
-import convertToBase64 from "./helpers/ImgConverter";
-const Register = () => {
-  const [file, setFile] = useState();
+import { usernameValidate, passwordValidate } from "../helpers/Validate";
+const Login = () => {
   const formik = useFormik({
     initialValues: {
-      email: "",
       username: "",
       password: "",
     },
-    validate: registerValidate,
+    validate: {
+      username: usernameValidate,
+      password: passwordValidate,
+    },
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      values = await Object.assign(values, { profile: file || "" });
       console.log(values);
     },
   });
-
-  const onUpload = async (e) => {
-    const base64 = await convertToBase64(e.target.files[0]);
-    setFile(base64);
-  };
   return (
     <div
       style={{
@@ -39,55 +32,46 @@ const Register = () => {
         <div className="flex-div">
           <div className="glass">
             <div className="title">
-              <h4>Register</h4>
-              <span className="greetings">Happy to Join you!</span>
+              <h4>Hello Again</h4>
+              <span className="greetings">
+                Explore More by connecting with us.
+              </span>
             </div>
             <form className="py-1" onSubmit={formik.handleSubmit}>
               <div className="profile">
-                <label htmlFor="profile">
-                  <img
-                    src={file || avatar}
-                    className="profile-img"
-                    alt="avatar"
-                  />
-                </label>
-                <input
-                  onChange={onUpload}
-                  type="file"
-                  id="profile"
-                  name="profile"
+                <img
+                  src="/images/logo.png"
+                  className="profile-img"
+                  alt="avatar"
                 />
               </div>
 
               <div className="text-box">
                 <input
                   className="i-box"
-                  type="email"
-                  placeholder="Email*"
-                  {...formik.getFieldProps("email")}
-                />
-                <input
-                  className="i-box"
                   type="text"
-                  placeholder="Username*"
+                  placeholder="Username"
                   {...formik.getFieldProps("username")}
                 />
-
                 <input
                   className="i-box"
                   type="password"
-                  placeholder="Password*"
+                  placeholder="Password"
                   {...formik.getFieldProps("password")}
                 />
                 <button className="btn" type="submit">
-                  Register
+                  Let&apos;s Go
                 </button>
               </div>
 
               <div className="title">
                 <span className="greetings">
-                  Already register?
-                  <NavLink to="/login">Login Now</NavLink>
+                  Don&apos;t have an account,
+                  <NavLink to="/register">&nbsp;Register Now!</NavLink>
+                </span>
+                <span>or</span>
+                <span className="greetings">
+                  <NavLink to="/register">Forgot Password!</NavLink>
                 </span>
               </div>
             </form>
@@ -115,26 +99,44 @@ const Wrapper = styled.section`
     width: 100%;
   }
 
-  @media (min-width: 425px) {
+  @media (min-width: 375px) {
     .container {
-      max-width: 425px;
-      height: 75%;
-      width: 40%;
+      max-width: 375px;
+    }
+    .glass {
+      min-width: 70%;
+    }
+  }
+  @media (min-width: 640px) {
+    .container {
+      max-width: 640px;
+    }
+    .glass {
+      min-width: 60%;
     }
   }
   @media (min-width: 768px) {
     .container {
       max-width: 768px;
     }
+    .glass {
+      min-width: 40%;
+    }
   }
   @media (min-width: 1024px) {
     .container {
       max-width: 1024px;
     }
+    .glass {
+      max-width: 30%;
+    }
   }
   @media (min-width: 1280px) {
     .container {
       max-width: 1280px;
+    }
+    .glass {
+      min-width: 30%;
     }
   }
 
@@ -163,7 +165,7 @@ const Wrapper = styled.section`
     border-width: 4px;
     border-color: #f9fafb;
     height: 75%;
-    width: 40%;
+    width: 30%;
 
     .title {
       display: flex;
@@ -196,15 +198,12 @@ const Wrapper = styled.section`
     justify-content: center;
     .profile-img {
       border-radius: 999px;
-      max-width: 130px;
-      max-height: 130px;
-      object-fit: cover;
       border-width: 4px;
       border-color: #f3f4f6;
       cursor: pointer;
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
         0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      width: 130px;
+      width: 135px;
       &:hover {
         border-color: #e5e7eb;
       }
@@ -250,9 +249,6 @@ const Wrapper = styled.section`
       }
     }
   }
-  input[type="file"] {
-    display: none;
-  }
 `;
 
-export default Register;
+export default Login;

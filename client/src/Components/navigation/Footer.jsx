@@ -1,6 +1,6 @@
 // import React from 'react'
 import { styled } from "styled-components";
-import { Button } from "../styles/Button";
+import { Button } from "../../styles/Button";
 import { NavLink } from "react-router-dom";
 const Footer = () => {
   const Wrapper = styled.section`

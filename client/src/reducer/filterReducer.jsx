@@ -128,10 +128,10 @@ const filterReducer = (state, action) => {
           company: "all",
           colors: "all",
           maxPrice: 0,
-          price: 0,
-          minPrice: 0,
-          // price: state.filters.maxPrice,
-          // minPrice: state.filters.maxPrice,
+          // price: 0,
+          // minPrice: 0,
+          price: state.filters.maxPrice,
+          minPrice: state.filters.maxPrice,
         },
       };
 

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
-import { useCartContext } from "../context/cartContext";
-import { Button } from "../styles/Button";
+import { useCartContext } from "../../context/cartContext";
+import { Button } from "../../styles/Button";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();

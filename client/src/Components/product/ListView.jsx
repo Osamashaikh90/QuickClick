@@ -1,8 +1,8 @@
 // import React from "react";
 import { styled } from "styled-components";
-import PriceFormator from "../helpers/PriceFormator";
+import PriceFormator from "../../helpers/PriceFormator";
 import { NavLink } from "react-router-dom";
-import { Button } from "../styles/Button";
+import { Button } from "../../styles/Button";
 const ListView = ({ products }) => {
   return (
     <Wrapper className="section">

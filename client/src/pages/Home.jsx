@@ -5,10 +5,10 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 import { styled } from "styled-components";
-import HeroSection from "./Components/HeroSection";
-import Services from "./Components/Services";
-import Trusted from "./Components/Trusted";
-import FeaturedProducts from "./Components/FeaturedProducts";
+import HeroSection from "../components/HeroSection";
+import Services from "../components/Services";
+import Trusted from "../components/Trusted";
+import FeaturedProducts from "../components/product/FeaturedProducts";
 const Home = () => {
   const data = {
     name: "QickClick",

@@ -11,6 +11,12 @@ const HideNavLayout = ({ children }) => {
       setShowNav(false);
     } else if (location.pathname === "/register") {
       setShowNav(false);
+    } else if (location.pathname === "/recovery") {
+      setShowNav(false);
+    } else if (location.pathname === "/reset") {
+      setShowNav(false);
+    } else if (location.pathname === "/profile") {
+      setShowNav(false);
     } else {
       setShowNav(true);
     }

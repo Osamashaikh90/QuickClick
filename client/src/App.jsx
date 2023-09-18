@@ -12,8 +12,8 @@ import Reset from "./pages/Reset";
 import SingleProduct from "./pages/SingleProduct";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { ThemeProvider } from "styled-components";
-import Header from "./components/navigation/Header";
-import Footer from "./components/navigation/Footer";
+// import Header from "./components/navigation/Header";
+// import Footer from "./components/navigation/Footer";
 import Register from "./pages/Register";
 import HideNavLayout from "../layout/HideNavLayout";
 const App = () => {
@@ -45,9 +45,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <GlobalStyle />
-        <HideNavLayout>
-          <Header />
-        </HideNavLayout>
+        <HideNavLayout>{/* <Header /> */}</HideNavLayout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -62,9 +60,7 @@ const App = () => {
           <Route path="/singleproduct/:id" element={<SingleProduct />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-        <HideNavLayout>
-          <Footer />
-        </HideNavLayout>
+        <HideNavLayout>{/* <Footer /> */}</HideNavLayout>
       </BrowserRouter>
     </ThemeProvider>
   );

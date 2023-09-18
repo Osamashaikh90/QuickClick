@@ -10,7 +10,7 @@ import SingleProductImg from "../components/product/SingleProductImg";
 import AddToCart from "../components/cart/AddToCart";
 import PriceFormator from "../helpers/PriceFormator";
 import Ratings from "../components/product/Ratings";
-const API = "https://api.pujakaitem.com/api/products";
+const API = "http://localhost:5000/api/products/get";
 const SingleProduct = () => {
   const { getSingleProduct, isSingleLoading, singleProduct } =
     useProductContext();

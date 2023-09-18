@@ -71,7 +71,7 @@ const Login = () => {
                 </span>
                 <span>or</span>
                 <span className="greetings">
-                  <NavLink to="/register">Forgot Password!</NavLink>
+                  <NavLink to="/recovery">Forgot Password!</NavLink>
                 </span>
               </div>
             </form>

@@ -1,7 +1,7 @@
 <h1 align="center"> QuickClick  - MERN Stack E-Commerce Platform </h1>
 
 #### QuickClick is a dynamic E-Commerce platform built using the MERN stack, designed to provide users with an efficient and enjoyable online shopping experience🛒.
-
+(🚧 Under Construction! 🚧)
 ## Screenshots 📸
 ![Quick-Click:HomePage)](https://i.imgur.com/mm3BUH8.png)
 

@@ -1,6 +1,6 @@
 // import React from 'react'
 import { NavLink } from "react-router-dom";
-import CartItem from "../components/cart/CartItem";
+import CartItem from "../Components/cart/CartItem";
 import { useCartContext } from "../context/cartContext";
 import styled from "styled-components";
 import { Button } from "../styles/Button";

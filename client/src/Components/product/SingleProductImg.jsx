@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 // import React from 'react'
 import { useState } from "react";
 import styled from "styled-components";
@@ -8,6 +9,7 @@ const SingleProductImg = ({ imgs = [{ url: "" }] }) => {
     <Wrapper>
       <div className="grid grid-four-column">
         {imgs &&
+          Array.isArray(imgs) &&
           // eslint-disable-next-line react/prop-types
           imgs.map((curElem, index) => {
             return (

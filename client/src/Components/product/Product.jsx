@@ -5,9 +5,10 @@ import PriceFormator from "../../helpers/PriceFormator";
 
 const Product = (curElem) => {
   //destructuring
-  const { id, name, image, price, category } = curElem;
+  const { _id, name, image, price, category } = curElem;
+  // console.log({ _id });
   return (
-    <NavLink to={`/singleProduct/${id}`}>
+    <NavLink to={`/singleProduct/${_id}`}>
       <div className="card">
         <figure>
           <img src={image} alt="" />

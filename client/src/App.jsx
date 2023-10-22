@@ -1,20 +1,20 @@
-import { BrowserRouter } from "react-router-dom";
-// import Home from "./pages/Home";
-// import About from "./pages/About";
-// import Cart from "./pages/Cart";
-// import Contact from "./pages/Contact";
-// import Login from "./pages/Login";
-// import ErrorPage from "./pages/ErrorPage";
-// import Products from "./pages/Products";
-// import Profile from "./pages/Profile";
-// import Recovery from "./pages/Recovery";
-// import Reset from "./pages/Reset";
-// import SingleProduct from "./pages/SingleProduct";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Cart from "./pages/Cart";
+import Contact from "./pages/Contact";
+import Login from "./pages/Login";
+import ErrorPage from "./pages/ErrorPage";
+import Products from "./pages/Products";
+import Profile from "./pages/Profile";
+import Recovery from "./pages/Recovery";
+import Reset from "./pages/Reset";
+import SingleProduct from "./pages/SingleProduct";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import Header from "./Components/navigation/Header";
-// import Footer from "./components/navigation/Footer";
-// import Register from "./pages/Register";
+import Footer from "./Components/navigation/Footer";
+import Register from "./pages/Register";
 import HideNavLayout from "../layout/HideNavLayout";
 const App = () => {
   const theme = {
@@ -48,28 +48,27 @@ const App = () => {
         <HideNavLayout>
           <Header />
         </HideNavLayout>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/recovery" element={<Recovery />} />
+          <Route path="/reset" element={<Reset />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/singleproduct/:id" element={<SingleProduct />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+        <HideNavLayout>
+          <Footer />
+        </HideNavLayout>
       </BrowserRouter>
     </ThemeProvider>
   );
 };
 
 export default App;
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-//     <Routes>
-//       <Route path="/" element={<Home />} />
-//       <Route path="/about" element={<About />} />
-//       <Route path="/cart" element={<Cart />} />
-//       <Route path="/contact" element={<Contact />} />
-//       <Route path="/login" element={<Login />} />
-//       <Route path="/register" element={<Register />} />
-//       <Route path="/recovery" element={<Recovery />} />
-//       <Route path="/reset" element={<Reset />} />
-//       <Route path="/profile" element={<Profile />} />
-//       <Route path="/products" element={<Products />} />
-//       <Route path="/singleproduct/:id" element={<SingleProduct />} />
-//       <Route path="*" element={<ErrorPage />} />
-//     </Routes>
-//     <HideNavLayout>
-//       <Footer />
-//     </HideNavLayout>

@@ -3,56 +3,57 @@ import { TbTruckDelivery, TbReplace } from "react-icons/tb";
 import { MdSecurity } from "react-icons/md";
 import styled from "styled-components";
 import { useEffect } from "react";
-import { useProductContext } from "../context/productContext";
+// import { useProductContext } from "../context/productContext";
 import { useParams } from "react-router-dom";
-import BreadCrumb from "../components/navigation/BreadCrumb";
-import SingleProductImg from "../components/product/SingleProductImg";
-import AddToCart from "../components/cart/AddToCart";
+import BreadCrumb from "../Components/navigation/BreadCrumb";
+import SingleProductImg from "../Components/product/SingleProductImg";
+import AddToCart from "../Components/cart/AddToCart";
 import PriceFormator from "../helpers/PriceFormator";
-import Ratings from "../components/product/Ratings";
-const API = "http://localhost:5000/api/products/get";
+import Ratings from "../Components/product/Ratings";
+import axios from "axios";
+import { useState } from "react";
+// const API = "http://localhost:5000/api/products/get";
 const SingleProduct = () => {
-  const { getSingleProduct, isSingleLoading, singleProduct } =
-    useProductContext();
-  const { id } = useParams();
-  const {
-    id: alias,
-    name,
-    company,
-    price,
-    description,
-    stock,
-    stars,
-    reviews,
-    image,
-  } = singleProduct;
-  useEffect(() => {
-    getSingleProduct(`${API}?id=${id}`);
-  }, []);
-  // console.log({ name });
+  const [singleProduct, setSingleProduct] = useState();
+  const params = useParams();
+  console.log(params.id);
 
-  if (isSingleLoading) {
+  const getSingleProduct = async () => {
+    const productdetails = await axios.get(
+      `http://localhost:5000/api/products/get/${params.id}`
+    );
+    setSingleProduct(productdetails.data);
+  };
+
+  useEffect(() => {
+    getSingleProduct();
+  }, []);
+
+  if (!singleProduct) {
     return <div className="page_loading">loading....</div>;
   }
 
   return (
     <Wrapper>
-      <BreadCrumb title={name} />
+      <BreadCrumb title={singleProduct.name} />
       <div className="container">
         <div className="grid grid-two-column">
           <div className="product_images">
-            <SingleProductImg imgs={image} />
+            <SingleProductImg imgs={singleProduct.image} />
           </div>
 
           {/* Product data */}
           <div className="product-data">
-            <h2>{name}</h2>
-            <Ratings stars={stars} reviews={reviews} />
+            <h2>{singleProduct.name}</h2>
+            <Ratings
+              stars={singleProduct.stars}
+              reviews={singleProduct.reviews}
+            />
 
             <p className="product-data-price">
               MRP:
               <del>
-                <PriceFormator price={price + 250000} />
+                <PriceFormator price={singleProduct.price + 250000} />
               </del>
             </p>
             <p
@@ -60,10 +61,10 @@ const SingleProduct = () => {
               className="product-data-price product-data-real-price"
             >
               Deal of the Day:
-              <PriceFormator price={price} />
+              <PriceFormator price={singleProduct.price} />
             </p>
 
-            <p>{description}</p>
+            <p>{singleProduct.description}</p>
             <div className="product-data-warranty">
               <div className="product-warranty-data">
                 <TbTruckDelivery className="warranty-icon" />
@@ -89,17 +90,20 @@ const SingleProduct = () => {
             <div className="product-data-info">
               <p>
                 Available:
-                <span> {stock > 0 ? "In Stock" : "Not Available"}</span>
+                <span>
+                  {" "}
+                  {singleProduct.stock > 0 ? "In Stock" : "Not Available"}
+                </span>
               </p>
               <p>
-                ID : <span> {id} </span>
+                ID : <span> {singleProduct._id} </span>
               </p>
               <p>
-                Brand :<span> {company} </span>
+                Brand :<span> {singleProduct.company} </span>
               </p>
             </div>
             <hr />
-            {stock > 0 && <AddToCart product={singleProduct} />}
+            {singleProduct.stock > 0 && <AddToCart product={singleProduct} />}
           </div>
         </div>
       </div>

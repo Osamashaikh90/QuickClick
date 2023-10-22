@@ -8,7 +8,7 @@ const Header = () => {
     <>
       <ParentHeader>
         <NavLink to="/">
-          <img className="logo" src="./images/logo.png" alt="LOGO" />
+          <img className="logo" src="./images/logo2.png" alt="LOGO" />
         </NavLink>
         <Nav />
       </ParentHeader>
@@ -26,7 +26,8 @@ const ParentHeader = styled.header`
   position: relative;
 
   .logo {
-    height: 5rem;
+    height: 8rem;
+    /* width: 4rem; */
   }
 `;
 

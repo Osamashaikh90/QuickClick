@@ -167,7 +167,10 @@ const cartReducer = (state, action) => {
   //     total_price,
   //   };
   // }
-  return state;
+  else {
+    // Handle other action types if necessary
+    return state;
+  }
 };
 
 export default cartReducer;

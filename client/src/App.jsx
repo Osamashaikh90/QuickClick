@@ -12,7 +12,7 @@ import { BrowserRouter } from "react-router-dom";
 // import SingleProduct from "./pages/SingleProduct";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { ThemeProvider } from "styled-components";
-import Header from "./components/navigation/Header";
+import Header from "./Components/navigation/Header";
 // import Footer from "./components/navigation/Footer";
 // import Register from "./pages/Register";
 import HideNavLayout from "../layout/HideNavLayout";

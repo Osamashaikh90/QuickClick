@@ -1,5 +1,5 @@
 // import React from 'react'
-import HeroSection from "../components/HeroSection";
+import HeroSection from "../Components/HeroSection";
 // import { useProductContext } from "./context/productContext";
 
 const About = () => {

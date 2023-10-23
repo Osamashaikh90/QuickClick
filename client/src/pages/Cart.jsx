@@ -9,20 +9,22 @@ const Cart = () => {
   const { cart, clearCart, total_price, shipping_fee } = useCartContext();
   if (cart.length === 0) {
     return (
-      <EmptyCart className="mt-100">
-        <img
-          src="https://i.imgur.com/dCdflKN.png"
-          width="130"
-          height="130"
-          className="ml-1"
-        />
-        <div>
-          <h3>No Products in Cart🚀</h3>
-          <NavLink to="/products">
-            <Button className="btn-cart">Continue Shopping</Button>
-          </NavLink>
-        </div>
-      </EmptyCart>
+      cart && (
+        <EmptyCart className="mt-100">
+          <img
+            src="https://i.imgur.com/dCdflKN.png"
+            width="130"
+            height="130"
+            className="ml-1"
+          />
+          <div>
+            <h3>No Products in Cart🚀</h3>
+            <NavLink to="/products">
+              <Button className="btn-cart">Continue Shopping</Button>
+            </NavLink>
+          </div>
+        </EmptyCart>
+      )
     );
   }
   return (

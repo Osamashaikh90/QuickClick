@@ -4,6 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 // eslint-disable-next-line react/prop-types
 const SingleProductImg = ({ imgs = [{ url: "" }] }) => {
+  console.log(imgs);
   const [mainImage, setMainImage] = useState(imgs[0]);
   return (
     <Wrapper>
@@ -15,8 +16,8 @@ const SingleProductImg = ({ imgs = [{ url: "" }] }) => {
             return (
               <figure>
                 <img
-                  src={curElem.url}
-                  alt={curElem.filename}
+                  src={curElem}
+                  alt={"Product Image"}
                   className="box-image--style"
                   key={index}
                   onClick={() => {
@@ -28,7 +29,7 @@ const SingleProductImg = ({ imgs = [{ url: "" }] }) => {
           })}
       </div>
       <div className="main-screen">
-        <img src={mainImage.url} alt={mainImage.filename} />
+        <img src={mainImage} alt={"Product Image"} />
       </div>
     </Wrapper>
   );
@@ -42,6 +43,7 @@ const Wrapper = styled.section`
     flex-direction: row;
     justify-items: center;
     align-items: center;
+    /* height: 60%; */
     width: 100%;
     gap: 1rem;
     /* order: 2; */
@@ -62,7 +64,7 @@ const Wrapper = styled.section`
     order: 1;
     img {
       max-width: 100%;
-      height: auto;
+      height: 40%;
       box-shadow: ${({ theme }) => theme.colors.shadow};
     }
   }

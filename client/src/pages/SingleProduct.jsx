@@ -16,7 +16,8 @@ import { useState } from "react";
 const SingleProduct = () => {
   const [singleProduct, setSingleProduct] = useState();
   const params = useParams();
-  console.log(params.id);
+  // console.log(singleProduct);
+  // console.log(singleProduct && singleProduct.stock);
 
   const getSingleProduct = async () => {
     const productdetails = await axios.get(
@@ -34,80 +35,81 @@ const SingleProduct = () => {
   }
 
   return (
-    <Wrapper>
-      <BreadCrumb title={singleProduct.name} />
-      <div className="container">
-        <div className="grid grid-two-column">
-          <div className="product_images">
-            <SingleProductImg imgs={singleProduct.image} />
-          </div>
-
-          {/* Product data */}
-          <div className="product-data">
-            <h2>{singleProduct.name}</h2>
-            <Ratings
-              stars={singleProduct.stars}
-              reviews={singleProduct.reviews}
-            />
-
-            <p className="product-data-price">
-              MRP:
-              <del>
-                <PriceFormator price={singleProduct.price + 250000} />
-              </del>
-            </p>
-            <p
-              style={{ marginRight: "5px" }}
-              className="product-data-price product-data-real-price"
-            >
-              Deal of the Day:
-              <PriceFormator price={singleProduct.price} />
-            </p>
-
-            <p>{singleProduct.description}</p>
-            <div className="product-data-warranty">
-              <div className="product-warranty-data">
-                <TbTruckDelivery className="warranty-icon" />
-                <p>Free Delivery</p>
-              </div>
-
-              <div className="product-warranty-data">
-                <TbReplace className="warranty-icon" />
-                <p>15 Days Replacement</p>
-              </div>
-
-              <div className="product-warranty-data">
-                <TbTruckDelivery className="warranty-icon" />
-                <p>Quick Shipment </p>
-              </div>
-
-              <div className="product-warranty-data">
-                <MdSecurity className="warranty-icon" />
-                <p>2 Year Warranty </p>
-              </div>
+    singleProduct && (
+      <Wrapper>
+        <BreadCrumb title={singleProduct.name} />
+        <div className="container">
+          <div className="grid grid-two-column">
+            <div className="product_images">
+              <SingleProductImg imgs={singleProduct.image} />
             </div>
 
-            <div className="product-data-info">
-              <p>
-                Available:
-                <span>
-                  {" "}
-                  {singleProduct.stock > 0 ? "In Stock" : "Not Available"}
-                </span>
+            {/* Product data */}
+            <div className="product-data">
+              <h2>{singleProduct.name}</h2>
+              <Ratings
+                stars={singleProduct.stars}
+                reviews={singleProduct.reviews}
+              />
+
+              <p className="product-data-price">
+                MRP:
+                <del>
+                  <PriceFormator price={singleProduct.price + 250000} />
+                </del>
               </p>
-              <p>
-                ID : <span> {singleProduct._id} </span>
+              <p
+                style={{ marginRight: "5px" }}
+                className="product-data-price product-data-real-price"
+              >
+                Deal of the Day:
+                <PriceFormator price={singleProduct.price} />
               </p>
-              <p>
-                Brand :<span> {singleProduct.company} </span>
-              </p>
+
+              <p>{singleProduct.description}</p>
+              <div className="product-data-warranty">
+                <div className="product-warranty-data">
+                  <TbTruckDelivery className="warranty-icon" />
+                  <p>Free Delivery</p>
+                </div>
+
+                <div className="product-warranty-data">
+                  <TbReplace className="warranty-icon" />
+                  <p>15 Days Replacement</p>
+                </div>
+
+                <div className="product-warranty-data">
+                  <TbTruckDelivery className="warranty-icon" />
+                  <p>Quick Shipment </p>
+                </div>
+
+                <div className="product-warranty-data">
+                  <MdSecurity className="warranty-icon" />
+                  <p>2 Year Warranty </p>
+                </div>
+              </div>
+
+              <div className="product-data-info">
+                <p>
+                  Available:
+                  <span>
+                    {singleProduct.stock > 0 ? "In Stock" : "Out Of Stock"}
+                  </span>
+                </p>
+                <p>
+                  ID : <span> {singleProduct._id} </span>
+                </p>
+                <p>
+                  Brand :<span> {singleProduct.company} </span>
+                </p>
+              </div>
+              <hr />
+              {singleProduct.stock > 0 && <AddToCart product={singleProduct} />}
             </div>
-            <hr />
-            {singleProduct.stock > 0 && <AddToCart product={singleProduct} />}
           </div>
         </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    )
   );
 };
 

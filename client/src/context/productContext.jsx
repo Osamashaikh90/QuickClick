@@ -5,7 +5,7 @@ import { useContext, createContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import reducer from "../reducer/productReducer";
 const AppContext = createContext();
-const API = "http://localhost:5000/api/products/get";
+const API = "https://quick-click-o1yf.vercel.app";
 const initialState = {
   isLoading: false,
   isError: false,
@@ -43,7 +43,8 @@ const AppProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    getProducts(API);
+    const url_api = `${API}/api/products/get`;
+    getProducts(url_api);
   }, []);
 
   return (

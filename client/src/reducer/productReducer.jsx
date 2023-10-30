@@ -7,10 +7,15 @@ const ProductReducer = (state, action) => {
       };
     case "SET_API_DATA":
       //   eslint-disable-next-line no-case-declarations
-      const featureData = action.payload.filter((curElem) => {
-        return curElem.featured === true;
-      });
-      //   console.log(featureData);
+      let featureData;
+      console.log(action.payload);
+
+      if (action.payload) {
+        featureData = action.payload.filter((elem) => {
+          return elem.featured === true;
+        });
+      }
+
       return {
         ...state,
         isLoading: false,

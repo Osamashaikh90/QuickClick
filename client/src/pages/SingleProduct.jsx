@@ -21,7 +21,7 @@ const SingleProduct = () => {
 
   const getSingleProduct = async () => {
     const productdetails = await axios.get(
-      `https://quick-click-o1yf.vercel.app/${params.id}`
+      `https://quick-click-o1yf.vercel.app/api/products/get/${params.id}`
     );
     setSingleProduct(productdetails.data);
   };

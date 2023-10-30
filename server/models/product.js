@@ -35,8 +35,11 @@ const productSchema = new mongoose.Schema({
     },
   },
   image: {
-    type: "string",
-    format: "uri",
+    type: "array",
+    items: {
+      type: "string",
+      format: "uri",
+    },
     required: true,
   },
   description: {
@@ -51,6 +54,10 @@ const productSchema = new mongoose.Schema({
   featured: {
     type: Boolean,
     default: false,
+  },
+  stock: {
+    type: Number,
+    default: 0,
   },
   rating: {
     type: Number,

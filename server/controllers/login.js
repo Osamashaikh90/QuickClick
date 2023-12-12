@@ -2,106 +2,122 @@ const RegisterSchema = require("../models/registerSchema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-/** middleware for verify user */
+//** middleware for verify user */
 const verifyUser = async (req, res, next) => {
   try {
     const { username } = req.method == "GET" ? req.query : req.body;
 
     // check the user existance
-    let exist = await RegisterSchema.findOne({ username });
+    let exist = await UserModel.findOne({ username });
     if (!exist) return res.status(404).send({ error: "Can't find User!" });
     next();
   } catch (error) {
     return res.status(404).send({ error: "Authentication Error" });
   }
 };
+
 const userRegister = async (req, res) => {
   try {
     const { username, password, profile, email } = req.body;
-    if (!username) {
-      throw Error("Please fill username field");
-    }
-    if (!email) {
-      throw Error("Please fill email Field");
-    }
-    if (!password) {
-      throw Error("Please fill password Field");
-    }
-    const existingUsername = await RegisterSchema.findOne({ username }).exec();
-    if (existingUsername) {
-      return res.status(400).send({ error: "Please use a unique username" });
-    }
 
-    const existingEmail = await RegisterSchema.findOne({ email }).exec();
-    if (existingEmail) {
-      return res.status(400).send({ error: "Please use a unique email" });
-    }
+    // check the existing user
+    const existUsername = new Promise((resolve, reject) => {
+      UserModel.findOne({ username }, function (err, user) {
+        if (err) reject(new Error(err));
+        if (user) reject({ error: "Please use unique username" });
 
-    if (password) {
-      bcrypt
-        .hash(password, 10)
-        .then((hashedPassword) => {
-          const user = new RegisterSchema({
-            username,
-            password: hashedPassword,
-            profile: profile || "",
-            email,
-          });
+        resolve();
+      });
+    });
 
-          user
-            .save()
-            .then((result) =>
-              res.status(201).send({ msg: "User Registerd Successfully" })
-            )
-            .catch((error) => res.status(500).send({ error }));
-        })
-        .catch((error) => {
-          return res.status(500).send({
-            error: "Unable to hashed password",
-          });
-        });
-    }
+    // check for existing email
+    const existEmail = new Promise((resolve, reject) => {
+      UserModel.findOne({ email }, function (err, email) {
+        if (err) reject(new Error(err));
+        if (email) reject({ error: "Please use unique Email" });
+
+        resolve();
+      });
+    });
+
+    Promise.all([existUsername, existEmail])
+      .then(() => {
+        if (password) {
+          bcrypt
+            .hash(password, 10)
+            .then((hashedPassword) => {
+              const user = new RegisterSchema({
+                username,
+                password: hashedPassword,
+                profile: profile || "",
+                email,
+              });
+
+              // return save result as a response
+              user
+                .save()
+                .then((result) =>
+                  res.status(201).send({ msg: "User Register Successfully" })
+                )
+                .catch((error) => res.status(500).send({ error }));
+            })
+            .catch((error) => {
+              return res.status(500).send({
+                error: "Enable to hashed password",
+              });
+            });
+        }
+      })
+      .catch((error) => {
+        return res.status(500).send({ error });
+      });
   } catch (error) {
-    console.error("An error occurred:", error);
-    return res.status(500).send({ error: "An error occurred" });
+    return res.status(500).send(error);
   }
 };
-//Login
+
+//*Login
 const userLogin = async (req, res) => {
   const { username, password } = req.body;
+
   try {
-    const user = await RegisterSchema.findOne({ username });
+    UserModel.findOne({ username })
+      .then((user) => {
+        bcrypt
+          .compare(password, user.password)
+          .then((passwordCheck) => {
+            if (!passwordCheck)
+              return res.status(400).send({ error: "Don't have Password" });
 
-    if (!user) {
-      return res.status(404).send({ error: "Username not found" });
-    }
+            // create jwt token
+            const token = jwt.sign(
+              {
+                userId: user._id,
+                username: user.username,
+              },
+              ENV.JWT_SECRET,
+              { expiresIn: "24h" }
+            );
 
-    const passwordCheck = await bcrypt.compare(password, user.password);
-
-    if (!passwordCheck) {
-      return res.status(400).send({ error: "Password does not match" });
-    }
-
-    const token = jwt.sign(
-      {
-        userId: user._id,
-        username: user.username,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "24h" }
-    );
-
-    return res.status(200).send({
-      msg: "Login Successfully",
-      username: user.username,
-      token,
-    });
+            return res.status(200).send({
+              msg: "Login Successful...!",
+              username: user.username,
+              token,
+            });
+          })
+          .catch((error) => {
+            return res.status(400).send({ error: "Password does not Match" });
+          });
+      })
+      .catch((error) => {
+        return res.status(404).send({ error: "Username not Found" });
+      });
   } catch (error) {
-    console.error("An error occurred:", error);
-    return res.status(500).send({ error: "An error occurred" });
+    return res.status(500).send({ error });
   }
 };
-//getUser
+
+//*getUser
 const getUser = async (req, res) => {
   const { username } = req.params;
 

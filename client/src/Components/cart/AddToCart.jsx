@@ -23,7 +23,7 @@ const AddToCart = ({ product }) => {
     <Wrapper>
       <div className="colors">
         <p>
-          Colors:
+          {/* Colors:
           {colors &&
             colors.map((curCol, index) => {
               return (
@@ -38,7 +38,8 @@ const AddToCart = ({ product }) => {
                   {color === curCol ? <FaCheck className="checkStyle" /> : null}
                 </button>
               );
-            })}
+            })} */}
+          hola
         </p>
       </div>
       <CartAmountToggle

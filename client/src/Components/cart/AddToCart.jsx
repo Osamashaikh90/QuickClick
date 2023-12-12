@@ -10,9 +10,14 @@ import { useCartContext } from "../../context/cartContext";
 
 const AddToCart = ({ product }) => {
   const { addToCart } = useCartContext();
-  const { id, colors, stock } = product;
+  const { _id, colors, stock } = product;
   const [color, setColor] = useState(colors[0]);
   const [amount, setAmount] = useState(1);
+
+  console.log("AddToCart - Product ID:", _id);
+  console.log("AddToCart - Color:", color);
+  console.log("AddToCart - Amount:", amount);
+
   const setDecrease = () => {
     amount > 1 ? setAmount(amount - 1) : setAmount(1);
   };
@@ -23,7 +28,7 @@ const AddToCart = ({ product }) => {
     <Wrapper>
       <div className="colors">
         <p>
-          {/* Colors:
+          Colors:
           {colors &&
             colors.map((curCol, index) => {
               return (
@@ -38,7 +43,7 @@ const AddToCart = ({ product }) => {
                   {color === curCol ? <FaCheck className="checkStyle" /> : null}
                 </button>
               );
-            })} */}
+            })}
           hola
         </p>
       </div>
@@ -47,7 +52,10 @@ const AddToCart = ({ product }) => {
         setDecrease={setDecrease}
         setIncrease={setIncrease}
       />
-      <NavLink to="/cart" onClick={() => addToCart(id, color, amount, product)}>
+      <NavLink
+        to="/cart"
+        onClick={() => addToCart(_id, color, amount, product)}
+      >
         <Button>Add To Cart</Button>
       </NavLink>
     </Wrapper>

@@ -33,6 +33,7 @@ const SingleProduct = () => {
   if (!singleProduct) {
     return <div className="page_loading">loading....</div>;
   }
+  console.log("Product ID:", singleProduct && singleProduct._id);
 
   return (
     singleProduct && (

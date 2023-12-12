@@ -1,16 +1,17 @@
 // import React from 'react'
 
 const cartReducer = (state, action) => {
+  state = state || { cart: [] };
   if (action.type === "ADD_TO_CART") {
     let { id, color, amount, product } = action.payload;
     // console.log(id, color, amount, product);
-    state = state || { cart: [] };
     if (!Array.isArray(state.cart)) {
       console.error("Cart is not an array:", state.cart);
-      return state; // Return the current state to prevent further errors
+      state = { ...state, cart: [] };
+      // return state; // Return the current state to prevent further errors
     }
     let existingProduct = state.cart
-      ? state.cart.find((curPro) => curPro.id === action.payload._id + color)
+      ? state.cart.find((curPro) => curPro.id === id + color)
       : null;
 
     if (existingProduct) {

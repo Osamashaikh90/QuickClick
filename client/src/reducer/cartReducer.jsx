@@ -1,20 +1,18 @@
 // import React from 'react'
 
 const cartReducer = (state, action) => {
-  console.log("Action Type:", action.type);
-  console.log("Action Payload:", action.payload);
-
   if (action.type === "ADD_TO_CART") {
-    let { color, amount, product } = action.payload;
-    console.log(action.payload);
+    let { id, color, amount, product } = action.payload;
+    // console.log(id, color, amount, product);
+    state = state || { cart: [] };
 
-    let existingProduct = state.cart.find(
-      (curPro) => curPro.id === action.payload.id + color
-    );
+    let existingProduct = state.cart
+      ? state.cart.find((curPro) => curPro.id === action.payload._id + color)
+      : null;
 
     if (existingProduct) {
       let updateProduct = state.cart.map((curElem) => {
-        if (curElem.id === action.payload.id + color) {
+        if (curElem.id === id + color) {
           let newQuantity = curElem.amount + amount;
           if (newQuantity >= curElem.max) {
             newQuantity = curElem.max;
@@ -34,7 +32,7 @@ const cartReducer = (state, action) => {
     } else {
       let cartProduct;
       cartProduct = {
-        id: action.payload.id + color,
+        id: id + color,
         name: product.name,
         color: color,
         amount: amount,

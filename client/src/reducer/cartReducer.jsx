@@ -5,7 +5,10 @@ const cartReducer = (state, action) => {
     let { id, color, amount, product } = action.payload;
     // console.log(id, color, amount, product);
     state = state || { cart: [] };
-
+    if (!Array.isArray(state.cart)) {
+      console.error("Cart is not an array:", state.cart);
+      return state; // Return the current state to prevent further errors
+    }
     let existingProduct = state.cart
       ? state.cart.find((curPro) => curPro.id === action.payload._id + color)
       : null;

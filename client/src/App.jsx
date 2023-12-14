@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
@@ -67,6 +68,7 @@ const App = () => {
           <Footer />
         </HideNavLayout>
       </BrowserRouter>
+      <SpeedInsights />
     </ThemeProvider>
   );
 };

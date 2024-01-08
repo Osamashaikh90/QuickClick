@@ -9,7 +9,7 @@ const ListView = ({ products }) => {
       <div className="container grid ">
         {products &&
           products.map((currElem) => {
-            const { id, name, image, price, description } = currElem;
+            const { _id, name, image, price, description } = currElem;
             return (
               // eslint-disable-next-line react/jsx-key
               <div className="card grid grid-two-column">
@@ -22,7 +22,7 @@ const ListView = ({ products }) => {
                     <PriceFormator price={price} />
                   </p>
                   <p>{description.slice(0, 105)}...</p>
-                  <NavLink to={`/singleProduct/${id}`} className="btn-main">
+                  <NavLink to={`/singleProduct/${_id}`} className="btn-main">
                     <Button className="btn">Read More</Button>
                   </NavLink>
                 </div>

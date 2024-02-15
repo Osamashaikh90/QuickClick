@@ -8,7 +8,7 @@ const Header = () => {
     <>
       <ParentHeader>
         <NavLink to="/">
-          <img className="logo" src="./images/logo2.png" alt="LOGO" />
+          <img className="logo" src="./images/logo2wbg.png" alt="LOGO" />
         </NavLink>
         <Nav />
       </ParentHeader>

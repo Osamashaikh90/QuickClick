@@ -11,10 +11,13 @@ const Login = () => {
       username: "",
       password: "",
     },
-    validate: {
-      username: usernameValidate,
-      password: passwordValidate,
+    validate: (values) => {
+      const errors = {};
+      usernameValidate(values);
+      passwordValidate(values);
+      return errors;
     },
+    
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
@@ -24,7 +27,7 @@ const Login = () => {
   return (
     <div
       style={{
-        background: "red",
+        background: "#E4E4E4",
         backgroundImage: `url(" /images/Background.png")`,
       }}
     >

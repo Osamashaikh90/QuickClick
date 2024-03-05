@@ -14,9 +14,9 @@ const AddToCart = ({ product }) => {
   const [color, setColor] = useState(colors[0]);
   const [amount, setAmount] = useState(1);
 
-  console.log("AddToCart - Product ID:", _id);
-  console.log("AddToCart - Color:", color);
-  console.log("AddToCart - Amount:", amount);
+  // console.log("AddToCart - Product ID:", _id);
+  // console.log("AddToCart - Color:", color);
+  // console.log("AddToCart - Amount:", amount);
 
   const setDecrease = () => {
     amount > 1 ? setAmount(amount - 1) : setAmount(1);

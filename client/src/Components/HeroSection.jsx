@@ -1,5 +1,5 @@
 // import React from 'react'
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../styles/Button";
 // eslint-disable-next-line react/prop-types
@@ -20,9 +20,9 @@ const HeroSection = (props) => {
                 voluptates, sapiente officiis molestiae iure velit dicta rem
                 modi hic consequuntur.
               </p>
-              <NavLink>
+              <Link to='/products'>
                 <Button>Shop Now</Button>
-              </NavLink>
+              </Link>
             </div>
             <div className="hero-section-image">
               {/* eslint-disable-next-line react/no-unknown-property, react/prop-types */}

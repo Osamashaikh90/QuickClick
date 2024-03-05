@@ -24,7 +24,7 @@ const Recovery = () => {
   return (
     <div
       style={{
-        background: "red",
+        background: "#E4E4E4",
         backgroundImage: `url(" /images/Background.png")`,
       }}
     >

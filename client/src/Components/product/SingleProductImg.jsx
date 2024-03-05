@@ -4,7 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 // eslint-disable-next-line react/prop-types
 const SingleProductImg = ({ imgs = [{ url: "" }] }) => {
-  console.log(imgs);
+  // console.log(imgs);
   const [mainImage, setMainImage] = useState(imgs[0]);
   return (
     <Wrapper>

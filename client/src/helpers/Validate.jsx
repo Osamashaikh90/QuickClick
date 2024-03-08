@@ -41,7 +41,7 @@ export async function registerValidate(values) {
 function usernameVerify(error = {}, values) {
   if (!values.username) {
     error.username = toast.error("Username Required!");
-  } else if (values.username.includes("")) {
+  } else if (values.username.includes(" ")) {
     error.username = toast.error("Invalid Username!");
   }
   return error;
@@ -53,7 +53,7 @@ function passwordVerify(error = {}, values) {
   const specialChar = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   if (!values.password) {
     error.password = toast.error("Password Required!");
-  } else if (values.password.includes("")) {
+  } else if (values.password.includes(" ")) {
     error.password = toast.error("Invalid Password!");
   } else if (values.password.length < 4) {
     error.password = toast.error("Password must be more than 4 character");

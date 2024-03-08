@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import avatar from "/images/logo.png";
 import styled from "styled-components";
 import { ToastContainer } from "react-toastify";
@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { registerValidate } from "../helpers/Validate";
 import { useState } from "react";
 import convertToBase64 from "../helpers/ImgConverter";
-const Register = () => {
+const Profile = () => {
   const [file, setFile] = useState();
   const formik = useFormik({
     initialValues: {
@@ -31,7 +31,7 @@ const Register = () => {
   return (
     <div
       style={{
-        background: "red",
+        background: "#E4E4E4",
         backgroundImage: `url(" /images/Background.png")`,
       }}
     >
@@ -39,8 +39,8 @@ const Register = () => {
         <div className="flex-div">
           <div className="glass">
             <div className="title">
-              <h4>Register</h4>
-              <span className="greetings">Happy to Join you!</span>
+              <h4>Profile</h4>
+              <span className="greetings">You can update your details here.</span>
             </div>
             <form className="py-1" onSubmit={formik.handleSubmit}>
               <div className="profile">
@@ -93,16 +93,16 @@ const Register = () => {
                   {...formik.getFieldProps("password")}
                 />
                 <button className="btn" type="submit">
-                  Register
+                  Update
                 </button>
               </div>
 
-              <div className="title">
+              {/* <div className="title">
                 <span className="greetings">
                   Already register?
                   <NavLink to="/login">Login Now</NavLink>
                 </span>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
@@ -128,12 +128,12 @@ const Wrapper = styled.section`
     width: 100%;
   }
 
-  @media (min-width: 375px) {
+  @media (min-width: 320px) {
     .container {
-      max-width: 375px;
+      max-width: 320px;
     }
     .glass {
-      min-width: 70%;
+      min-width: 90%;
     }
   }
   @media (min-width: 640px) {
@@ -149,7 +149,7 @@ const Wrapper = styled.section`
       max-width: 768px;
     }
     .glass {
-      min-width: 60%;
+      min-width: 70%;
     }
   }
   @media (min-width: 1024px) {
@@ -292,4 +292,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default Register;
+export default Profile;

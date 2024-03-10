@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const {registerMail} = require("../controllers/mailer")
 const {
   userLogin,
   userRegister,
@@ -11,18 +12,21 @@ const {
   createResetSession,
   resetPassword,
 } = require("../controllers/login");
+const {Auth,localVariables} = require("../middleware/auth");
 /** Post Methods */
 router.route("/login").post(verifyUser, userLogin);
 router.route("/register").post(userRegister);
-// router.route("/registerMail").post(userRegister);
-router.route("/authenticate").post((req, res) => res.end());
+router.route("/registerMail").post(registerMail);
+//tis route is extra iggg
+router.route("/authenticate").post(verifyUser,(req, res) => res.end());      
 /** Get Methods */
 router.route("/user/:username").get(getUser);
 router.route("/register").get(userRegister);
-router.route("/generateOTP").get(generateOTP);
-router.route("/verifyOTP").get(verifyOTP);
-router.route("/createResetSession").get(createResetSession);
+//first we verify user and then create a middleware for OTP and generate the otp
+router.route("/generateOTP").get(verifyUser,localVariables,generateOTP);
+router.route("/verifyOTP").get(verifyUser,verifyOTP);
+router.route("/createResetSession").get(createResetSession);   //to reset variables
 /** Put Methods */
-router.route("/updateUser").put(updateUser);
-router.route("/resetPassword").put(resetPassword);
+router.route("/updateUser").put(Auth,updateUser);
+router.route("/resetPassword").put(verifyUser,resetPassword);
 module.exports = router;

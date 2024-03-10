@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
@@ -6,7 +7,7 @@ const registerSchema = new Schema({
   username: {
     type: String,
     required: [true, "Username is required."],
-    unique: true,
+    unique:[ true,"Username Exist"],
   },
   password: {
     type: String,
@@ -19,7 +20,7 @@ const registerSchema = new Schema({
     unique: true,
   },
   profile: { type: String },
-  mobile: { type: String },
+  mobile: { type: Number },
 });
 
 module.exports = mongoose.model("RegisterSchema", registerSchema);

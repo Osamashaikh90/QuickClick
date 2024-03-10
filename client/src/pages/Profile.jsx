@@ -192,7 +192,7 @@ const Wrapper = styled.section`
     border-radius: 1.5rem;
     border-width: 4px;
     border-color: #f9fafb;
-    height: 75%;
+    /* height: 75%; */
     width: 50%;
 
     .title {
@@ -253,6 +253,7 @@ const Wrapper = styled.section`
     gap: 1.5rem;
     align-items: center;
     .i-box {
+      text-transform: none;
       padding-top: 1rem;
       padding-bottom: 1rem;
       padding-left: 1.25rem;

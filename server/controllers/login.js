@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config(); 
 const otpGenerator = require("otp-generator");
-const registerSchema = require("../models/registerSchema");
+
 
 //** middleware for verify user */
 const verifyUser = async (req, res, next) => {
@@ -59,45 +59,7 @@ const userRegister = async (req, res) => {
 };
 
 //*Login
-// const userLogin = async (req, res) => {
-//   const { username, password } = req.body;
 
-//   try {
-//     RegisterSchema.findOne({ username })
-//       .then((user) => {
-//         bcrypt
-//           .compare(password, user.password)
-//           .then((passwordCheck) => {
-//             if (!passwordCheck)
-//               return res.status(400).send({ error: "Don't have Password" });
-
-//             // create jwt token
-//             const token = jwt.sign(
-//               {
-//                 userId: user._id,
-//                 username: user.username,
-//               },
-//               process.env.JWT_SECRET,
-//               { expiresIn: "24h" }
-//             );
-
-//             return res.status(200).send({
-//               msg: "Login Successful...!",
-//               username: user.username,
-//               token,
-//             });
-//           })
-//           .catch((error) => {
-//             return res.status(400).send({ error: "Password does not Match" });
-//           });
-//       })
-//       .catch((error) => {
-//         return res.status(404).send({ error: "Username not Found" });
-//       });
-//   } catch (error) {
-//     return res.status(500).send({ error });
-//   }
-// };
 
 const userLogin = async (req, res) => {
   const { username, password } = req.body;
@@ -163,8 +125,9 @@ const updateUser = async (req, res) => {
   try {
     // const id = req.query.id;
     //this user id is coming after the authentication is done using the token
-    const userId = req.user;
-     
+
+    const {userId} = req.user;
+  
     if (userId) {
       const body = req.body;
 

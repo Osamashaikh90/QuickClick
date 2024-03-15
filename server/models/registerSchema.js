@@ -19,8 +19,11 @@ const registerSchema = new Schema({
     require: [true, "Please provide a uniuqe email"],
     unique: true,
   },
-  profile: { type: String },
-  mobile: { type: Number },
+  firstname: { type: String},
+  lastname: { type: String},
+  mobile : { type : Number},
+  address: { type: String},
+  profile: { type: String}
 });
 
 module.exports = mongoose.model("RegisterSchema", registerSchema);

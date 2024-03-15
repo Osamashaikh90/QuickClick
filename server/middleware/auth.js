@@ -8,12 +8,11 @@ const Auth = async(req,res,next)=>{
         //and this token will get using the authorization property
         //will get the token with bearer so we eill split the token and store it in the array
         const token = req.headers.authorization.split(" ")[1];
-
         //based on the token will retrive the data of the used
         const decodedToken = await jwt.verify(token,process.env.JWT_SECRET);
-
         //now based on this token will get the user 
         req.user = decodedToken;
+
         //since we dont want need the decodedToken
         //we want the next() func i.e updated user data
         next();
@@ -25,6 +24,7 @@ const Auth = async(req,res,next)=>{
         //     "exp": 
         //   }
     } catch (error) {
+        console.log("inside catch")
         res.status(401).json({error:"Authentication failed"});
     }
 

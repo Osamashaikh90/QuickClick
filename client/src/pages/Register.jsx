@@ -1,14 +1,19 @@
 import { NavLink } from "react-router-dom";
-import avatar from "/images/logo.png";
+import avatar from "/images/profile.jpg";
 import styled from "styled-components";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
 import { registerValidate } from "../helpers/Validate";
 import { useState } from "react";
 import convertToBase64 from "../helpers/ImgConverter";
+import { registerUser } from "../helpers/Helper";
+import { useNavigate } from "react-router-dom";
+import usePasswordToggle from "../hooks/usePasswordToggle";
 const Register = () => {
   const [file, setFile] = useState();
+  const [inputType,toggleIcon,toggleVisibility] = usePasswordToggle();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -19,14 +24,39 @@ const Register = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      values = await Object.assign(values, { profile: file || "" });
-      console.log(values);
+      try {
+        values = await Object.assign(values, { profile: file || "" });
+        console.log(values);
+    
+        let registerPromise = registerUser(values);
+        console.log('registerPromise:', registerPromise);
+    
+        toast.promise(
+          registerPromise,
+          {
+            lpending: "Creating...",
+            success: "Register Successfully...!",
+            error: "Could not Register.",
+          }
+        );
+        registerPromise.then(function(){ navigate('/login')});
+      } catch (error) {
+        // Handle any unexpected errors here
+        console.error('An error occurred:', error);
+      }
     },
   });
 
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const onUpload = async (e) => {
-    const base64 = await convertToBase64(e.target.files[0]);
-    setFile(base64);
+    const file = e.target.files[0];
+  if (file.size > MAX_FILE_SIZE) {
+    // Display an error message or prevent the upload
+    console.error('File size exceeds the limit');
+    return;
+  }
+  const base64 = await convertToBase64(file);
+  setFile(base64);
   };
   return (
     <div
@@ -73,12 +103,15 @@ const Register = () => {
                   {...formik.getFieldProps("username")}
                 />
 
+<div className=" flex-box">
                 <input
-                  className="i-box"
-                  type="password"
+                  className="i-box-p"
+                  type={inputType}
                   placeholder="Password*"
                   {...formik.getFieldProps("password")}
-                />
+                /> <span className="btn1" onClick={toggleVisibility}>
+                  {toggleIcon}
+                </span></div>
                 <button className="btn" type="submit">
                   Register
                 </button>
@@ -269,6 +302,53 @@ const Wrapper = styled.section`
         transform: scale(0.96);
       }
     }
+    .flex-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  .i-box-p {
+      text-transform: none;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+       padding-left: 1.25rem;
+      padding-right: 1.25rem; 
+      border-top-left-radius: 0.75rem;
+      border-bottom-left-radius: 0.75rem;
+      border-width: 0;
+      outline: none;
+      width: 55%;
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    .btn1 {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      /* border-width: 0.5px; */
+      border: none;
+      width: 20%;
+      font-size: 1.75rem;
+      line-height: 1rem;
+      text-align: center;
+      cursor: pointer;
+      /* color: #f9fafb; */
+      /* background-color: #6366f1; */
+      background-color: #ffffff;
+      border: none;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease 0s;
+      -moz-transition: all 0.3s ease 0s;
+      -o-transition: all 0.3s ease 0s;
+      &:hover {
+        box-shadow: 0 2rem 2rem 0 rgb(132 144 255 / 30%);
+        box-shadow: ${({ theme }) => theme.colors.shadowSupport};
+      }
+    }
+  }
   }
   input[type="file"] {
     display: none;

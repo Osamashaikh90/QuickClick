@@ -1,11 +1,18 @@
 // import React from 'react'
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
 import { usernameValidate, passwordValidate } from "../helpers/Validate";
+import { loginUser } from "../helpers/Helper";
+import { useNavigate } from "react-router-dom";
+// import { useAuthContext } from "../context/authContext";
+import usePasswordToggle from "../hooks/usePasswordToggle";
 const Login = () => {
+  const navigate = useNavigate();
+  const [inputType,toggleIcon,toggleVisibility] = usePasswordToggle();
+  // const {setUsername} = useAuthContext();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -21,8 +28,29 @@ const Login = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      console.log(values);
+      try {
+        let loginPromise = await loginUser({
+          username: values.username,
+          password: values.password,
+        });
+    
+        console.log("loginPromise:", loginPromise);
+    
+        toast.promise(Promise.resolve(loginPromise.data), {
+          pending:"loading...",
+          success: "Login Successfully",
+          error: loginPromise.data.error || "Credentials do not match!",
+        });
+    
+        let { token } = loginPromise.data;
+        localStorage.setItem('token', token);
+        // setUsername(username);
+        navigate('/');
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
     },
+    
   });
   return (
     <div
@@ -43,7 +71,7 @@ const Login = () => {
             <form className="py-1" onSubmit={formik.handleSubmit}>
               <div className="profile">
                 <img
-                  src="/images/logo.png"
+                  src="/images/authimg.png"
                   className="profile-img"
                   alt="avatar"
                 />
@@ -56,17 +84,21 @@ const Login = () => {
                   placeholder="Username"
                   {...formik.getFieldProps("username")}
                 />
+                <div className=" flex-box">
                 <input
-                  className="i-box"
-                  type="password"
-                  placeholder="Password"
+                  className="i-box-p"
+                  type={inputType}
+                  placeholder="Password*"
                   {...formik.getFieldProps("password")}
-                />
+                /> <span className="btn1" onClick={toggleVisibility}>
+                  {toggleIcon}
+                </span></div>
                 <button className="btn" type="submit">
                   Let&apos;s Go
                 </button>
               </div>
-
+              
+               
               <div className="title">
                 <span className="greetings">
                   Don&apos;t have an account,
@@ -82,7 +114,7 @@ const Login = () => {
         </div>
       </Wrapper>
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -91,7 +123,6 @@ const Login = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
       />
     </div>
   );
@@ -131,7 +162,7 @@ const Wrapper = styled.section`
       max-width: 1024px;
     }
     .glass {
-      max-width: 30%;
+      max-width: 40%;
     }
   }
   @media (min-width: 1280px) {
@@ -139,7 +170,7 @@ const Wrapper = styled.section`
       max-width: 1280px;
     }
     .glass {
-      min-width: 30%;
+      min-width: 40%;
     }
   }
 
@@ -167,7 +198,7 @@ const Wrapper = styled.section`
     border-radius: 1.5rem;
     border-width: 4px;
     border-color: #f9fafb;
-    height: 75%;
+    /* height: 75%; */
     width: 30%;
 
     .title {
@@ -218,6 +249,7 @@ const Wrapper = styled.section`
     gap: 1.5rem;
     align-items: center;
     .i-box {
+      text-transform:none;
       padding-top: 1rem;
       padding-bottom: 1rem;
       padding-left: 1.25rem;
@@ -251,7 +283,54 @@ const Wrapper = styled.section`
         transform: scale(0.96);
       }
     }
+    .flex-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  .i-box-p {
+      text-transform: none;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+       padding-left: 1.25rem;
+      padding-right: 1.25rem; 
+      border-top-left-radius: 0.75rem;
+      border-bottom-left-radius: 0.75rem;
+      border-width: 0;
+      outline: none;
+      width: 55%;
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    .btn1 {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      /* border-width: 0.5px; */
+      border: none;
+      width: 20%;
+      font-size: 1.75rem;
+      line-height: 1rem;
+      text-align: center;
+      cursor: pointer;
+      /* color: #f9fafb;*/
+      background-color: #ffffff; 
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease 0s;
+      -moz-transition: all 0.3s ease 0s;
+      -o-transition: all 0.3s ease 0s;
+      &:hover {
+        box-shadow: 0 2rem 2rem 0 rgb(132 144 255 / 30%);
+        box-shadow: ${({ theme }) => theme.colors.shadowSupport};
+      }
+    }
   }
+  }
+
+ 
 `;
 
 export default Login;

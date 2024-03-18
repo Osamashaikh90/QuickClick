@@ -1,26 +1,42 @@
 // import { NavLink } from "react-router-dom";
 import avatar from "/images/logo.png";
 import styled from "styled-components";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
-import { registerValidate } from "../helpers/Validate";
+import { profileValidation } from "../helpers/Validate";
 import { useState } from "react";
 import convertToBase64 from "../helpers/ImgConverter";
+import useFetch from "../hooks/useFetch";
+import { updateUser } from "../helpers/Helper";
+import { NavLink } from "react-router-dom";
 const Profile = () => {
   const [file, setFile] = useState();
+  const [{apiData}] = useFetch();
   const formik = useFormik({
     initialValues: {
-      email: "",
-      username: "",
-      password: "",
+      firstname:apiData?.firstname || "",
+      lastname:apiData?.lastname || "",
+      email: apiData?.email || "",
+      username:apiData?.username ||  "",
+      mobile:apiData?.mobile || "",
+      address:apiData?.address || "",
     },
-    validate: registerValidate,
+    enableReinitialize:true, 
+    validate: profileValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      values = await Object.assign(values, { profile: file || "" });
-      console.log(values);
+      values = await Object.assign(values, { profile: file || apiData?.profile || "" });
+      let updatePromise = updateUser(values);
+
+      toast.promise(updatePromise,{
+      pending:"updating...",
+      success:"Profile updated Successfully!",
+      error:"Could not update !"
+
+      
+      })
     },
   });
 
@@ -35,7 +51,11 @@ const Profile = () => {
         backgroundImage: `url(" /images/Background.png")`,
       }}
     >
-      <Wrapper className="container mx-auto">
+      <Wrapper className="container ">
+      <NavLink to="/">
+      <button className="btn-home" >
+                  Home
+                </button></NavLink>
         <div className="flex-div">
           <div className="glass">
             <div className="title">
@@ -46,7 +66,7 @@ const Profile = () => {
               <div className="profile">
                 <label htmlFor="profile">
                   <img
-                    src={file || avatar}
+                    src={apiData?.profile || file || avatar}
                     className="profile-img"
                     alt="avatar"
                   />
@@ -60,10 +80,31 @@ const Profile = () => {
               </div>
 
               <div className="text-box">
+              <div
+                  style={{ width: "75%" }}
+                  className="  grid grid-two-column"
+                >
+                  <input
+                    style={{ width: "100%" }}
+                    className="i-box"
+                    type="text"
+                    placeholder="FirstName*"
+                    {...formik.getFieldProps("firstname")}
+                  />
+
+                  <input
+                    style={{ width: "100%" }}
+                    className="i-box"
+                    type="text"
+                    placeholder="Lastname*"
+                    {...formik.getFieldProps("lastname")}
+                  />
+                </div>
                 <input
                   className="i-box"
                   type="text"
                   placeholder="Username*"
+                  disabled
                   {...formik.getFieldProps("username")}
                 />
                 <div
@@ -81,34 +122,27 @@ const Profile = () => {
                   <input
                     style={{ width: "100%" }}
                     className="i-box"
-                    type="password"
+                    type="number"
                     placeholder="Mobile*"
-                    {...formik.getFieldProps("password")}
+                    {...formik.getFieldProps("mobile")}
                   />
                 </div>
                 <input
                   className="i-box"
-                  type="password"
-                  placeholder="Password*"
-                  {...formik.getFieldProps("password")}
+                  type="text"
+                  placeholder="Address*"
+                  {...formik.getFieldProps("address")}
                 />
                 <button className="btn" type="submit">
                   Update
                 </button>
               </div>
-
-              {/* <div className="title">
-                <span className="greetings">
-                  Already register?
-                  <NavLink to="/login">Login Now</NavLink>
-                </span>
-              </div> */}
             </form>
           </div>
         </div>
       </Wrapper>
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -117,13 +151,22 @@ const Profile = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        
       />
     </div>
   );
 };
 
 const Wrapper = styled.section`
+.btn-home{
+margin-top: 4px;
+border: 2px solid white;
+padding: 1px 10px;
+color: #6366f1;
+border-radius: 5px;
+box-shadow: 0 2rem 2rem 0 rgb(132 144 255 / 30%);
+        box-shadow: ${({ theme }) => theme.colors.shadowSupport}
+}
   .container {
     width: 100%;
   }
@@ -176,7 +219,8 @@ const Wrapper = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    /* height: 100vh; */
+   height: 95vh;
   }
   .glass {
     background: rgba(255, 255, 255, 0.55);

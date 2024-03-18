@@ -1,26 +1,76 @@
 // import React from 'react'
 // import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { useFormik } from "formik";
-// import { usernameValidate, passwordValidate } from "./helpers/Validate";
+import { useFormik } from "formik";
+import { usernameValidate } from "../helpers/Validate";
+import { useAuthContext } from "../context/authContext";
+import { useEffect, useState } from "react";
+import { genearateOTP, verifyOTP } from "../helpers/Helper";
+import { useNavigate } from "react-router-dom";
 const Recovery = () => {
-  //   const formik = useFormik({
-  //     initialValues: {
-  //       username: "",
-  //       password: "",
-  //     },
-  //     validate: {
-  //       username: usernameValidate,
-  //       password: passwordValidate,
-  //     },
-  //     validateOnBlur: false,
-  //     validateOnChange: false,
-  //     onSubmit: async (values) => {
-  //       console.log(values);
-  //     },
-  //   });
+  const {setUsername,username} = useAuthContext();
+  const [OTP,setOTP] = useState();
+  const navigate = useNavigate();
+    const formik = useFormik({
+      initialValues: {
+        username: "",
+      },
+      validate: usernameValidate,
+      validateOnBlur: false,
+      validateOnChange: false,
+      onSubmit: async (values,e) => {
+        setUsername(values.username);
+      },
+    });
+    console.log(username)
+
+
+const onSubmit = async(e)=>{
+e.preventDefault();
+try {
+  let {status } = await verifyOTP({username,code:OTP});
+if(status === 201){
+toast.success("Verified Succesfully!")
+return navigate('/reset');
+}
+} catch (error) {
+  
+return toast.error('Wrong OTP!, Kindly Check OTP again!')
+}
+
+}
+   
+useEffect(() => {
+  // Check if username is available
+  if (username) {
+    genearateOTP(username)
+      .then((OTP) => {
+        if (OTP) return toast.success('OTP has been sent on your E-Mail!');
+        return toast.error('Problem while generating the OTP!');
+      })
+      .catch((error) => {
+        console.error('Error generating OTP:', error);
+        toast.error('Error while generating the OTP!');
+      });
+  }
+}, [username]);
+
+// Resend otp
+const resendOTP = ()=>{
+let sendPromise = genearateOTP(username);
+
+toast.promise(sendPromise,{
+pending:"Sending...",
+success:"OTP has benn sent on you email!",
+error:"Could not send OTP"
+
+})
+sendPromise.then(OTP=>{
+console.log(OTP)
+})
+}
   return (
     <div
       style={{
@@ -33,17 +83,29 @@ const Recovery = () => {
           <div className="glass">
             <div className="title">
               <h4>Recovery</h4>
-              <span className="greetings">Enter OTP to recover password.</span>
+              <span className="greetings">Enter Username to verify & receive OTP.</span>
             </div>
-            <form className="pt-20">
-              <div className="text-box">
-                <span className="otp">
-                  Enter 6 digit <b>OTP</b> sent to your email address.
-                </span>
+            <form onSubmit={formik.handleSubmit} >
+              <div className=" flex-box">
                 <input
                   className="i-box"
                   type="text"
+                  placeholder="Username"
+                  {...formik.getFieldProps("username")}
+                />
+                <button className="btn" type="submit">
+                  Send
+                </button></div></form>
+            <form className="pt-20" onSubmit={onSubmit}>
+              <div className="text-box">
+                <span className="otp">
+                  Enter 6 digit <b>OTP</b> sent to your E-Mail address.
+                </span>
+                <input
+                  className="i-box"
+                  type="number"
                   placeholder="OTP"
+                  onChange={(e)=>{setOTP(e.target.value)}}
                   //   {...formik.getFieldProps("username")}
                 />
 
@@ -55,7 +117,7 @@ const Recovery = () => {
             <div className="title">
               <span className="greetings">
                 Can&apos;t get OTP?&nbsp;
-                <button style={{ color: "red", borderStyle: "none" }}>
+                <button style={{ color: "red", borderStyle: "none" }} onClick={resendOTP}>
                   Resend
                 </button>
               </span>
@@ -73,7 +135,6 @@ const Recovery = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
       />
     </div>
   );
@@ -206,6 +267,7 @@ const Wrapper = styled.section`
       }
     }
   }
+  
   .text-box {
     display: flex;
     flex-direction: column;
@@ -245,6 +307,50 @@ const Wrapper = styled.section`
         box-shadow: 0 2rem 2rem 0 rgb(132 144 255 / 30%);
         box-shadow: ${({ theme }) => theme.colors.shadowSupport};
         transform: scale(0.96);
+      }
+    }
+  }
+
+  .flex-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .i-box {
+      text-transform: none;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      border-top-left-radius: 0.75rem;
+      border-bottom-left-radius: 0.75rem;
+      border-width: 0;
+      outline: none;
+      width: 55%;
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    .btn {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      /* border-width: 0.5px; */
+      border: none;
+      width: 20%;
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      text-align: center;
+      color: #f9fafb;
+      background-color: #6366f1;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease 0s;
+      -moz-transition: all 0.3s ease 0s;
+      -o-transition: all 0.3s ease 0s;
+      &:hover {
+        box-shadow: 0 2rem 2rem 0 rgb(132 144 255 / 30%);
+        box-shadow: ${({ theme }) => theme.colors.shadowSupport};
       }
     }
   }

@@ -1,10 +1,19 @@
 /* eslint-disable no-useless-escape */
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { authenticate } from "./Helper";
 
 // validate loginpage username
 export async function usernameValidate(values) {
   const errors = usernameVerify({}, values);
+  if(values.username){
+  const {status} = await authenticate(values.username);
+
+  if(status !== 200){
+  errors.exist = toast.error('user does not exist....')
+  }
+  
+  }
   return errors;
 }
 // validate loginpage password
@@ -24,7 +33,7 @@ export async function resetPasswordValidation(values) {
   return errors;
 }
 //validate profile page
-export async function registerValidation(values) {
+export async function profileValidation(values) {
   const errors = emailVerify({}, values);
   return errors;
 }
@@ -75,3 +84,4 @@ function emailVerify(error = {}, values) {
 
   return error;
 }
+

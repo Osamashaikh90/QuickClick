@@ -17,6 +17,7 @@ import Header from "./Components/navigation/Header";
 import Footer from "./Components/navigation/Footer";
 import Register from "./pages/Register";
 import HideNavLayout from "../layout/HideNavLayout";
+import { AuthorizeUser } from "./middleware/auth";
 const App = () => {
   const theme = {
     colors: {
@@ -53,7 +54,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<AuthorizeUser><Cart /></AuthorizeUser>} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

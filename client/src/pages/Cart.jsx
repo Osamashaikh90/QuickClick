@@ -5,9 +5,10 @@ import { useCartContext } from "../context/cartContext";
 import styled from "styled-components";
 import { Button } from "../styles/Button";
 import PriceFormator from "../helpers/PriceFormator";
+import useFetch from "../hooks/useFetch";
 const Cart = () => {
   const { cart, clearCart, total_price, shipping_fee } = useCartContext();
-
+  const [{apiData}] = useFetch();
   return cart && cart.length == 0 ? (
     <EmptyCart className="mt-100">
       <img
@@ -27,6 +28,7 @@ const Cart = () => {
     cart && (
       <Wrapper>
         <div className="container ">
+        <div className="cart-user--name">{`${apiData?.firstname}'s Cart🛒`}</div>
           <div className="cart_heading grid grid-five-column">
             <p>Item</p>
             <p className="cart-hide">Price</p>
@@ -153,6 +155,12 @@ const Wrapper = styled.section`
   }
   .cart-user--name {
     text-transform: capitalize;
+  font-size: 2rem;
+  line-height: 1.5;
+  font-weight:400;
+    margin-bottom: 12px ;
+      color: ${({ theme }) => theme.colors.helper};
+
   }
   .cart-image--name {
     /* background-color: red; */

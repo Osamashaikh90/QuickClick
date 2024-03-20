@@ -44,7 +44,6 @@ const AddToCart = ({ product }) => {
                 </button>
               );
             })}
-          hola
         </p>
       </div>
       <CartAmountToggle

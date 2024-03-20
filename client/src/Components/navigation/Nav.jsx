@@ -6,11 +6,48 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import { useCartContext } from "../../context/cartContext";
 import { Button } from "../../styles/Button";
+import { useNavigate } from "react-router-dom";
+// import { useAuthContext } from "../../context/authContext";
+import useFetch from "../../hooks/useFetch";
+import { PiSignOut } from "react-icons/pi";
+import { RiAccountCircleLine } from "react-icons/ri";
+
 
 const Nav = () => {
+  const [profileCard,setProfileCard] = useState(false);
   const [menuIcon, setMenuIcon] = useState();
-  const { total_item } = useCartContext();
+  const navigate = useNavigate();
+  // const {username} = useAuthContext();
+  
+  const [{ apiData }] = useFetch();
+
+  const { cart } = useCartContext();
+  const token = !!localStorage.getItem("token");
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  const handleProfile = ()=>{
+    setProfileCard(!profileCard);
+  }
   const Nav = styled.nav`
+    .profile {
+    position: relative;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .profile-img {
+      height: 30px;
+      width: 30px;
+      border-radius: 999999px;
+      border: 1px solid;
+      border-color: ${({ theme }) => theme.colors.helper};
+    }
     .btn-login {
       padding: 0.5rem 1.5rem;
       /* width: 100%; */
@@ -90,6 +127,68 @@ const Nav = () => {
     .user-login {
       font-size: 1.4rem;
       padding: 0.8rem 1.4rem;
+    }
+
+    .cardContainer {
+      display: flex;
+      position: absolute;
+      z-index: 10;
+      top: 4rem;
+      margin-top: 0.5rem;
+      flex-direction: column;
+      /* border-radius: 0.25rem; */
+      /* border: 1px solid #31363c; */
+      width: 15rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      box-shadow: 5px 20px 25px -2px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.3); 
+      color: #161b21 ;
+      background: #ffffff;
+
+      .card {
+        display: flex;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: start;
+
+        .card-btn{
+          display: flex;
+          align-items: center;
+          gap:12px;
+        padding-top: 0.25rem;
+padding-bottom: 0.25rem; 
+border: none;
+width: 100%;
+background-color: none;
+cursor: pointer; 
+:hover {
+border-radius: 3px;
+ background: #21262dc5;
+ }
+}
+ .log-btn{
+display: flex;
+align-items: center;
+gap: 12px;
+padding-top: 0.25rem;
+padding-bottom: 0.25rem; 
+border: none;
+width: 100%;
+background-color: none;
+cursor: pointer; 
+color: ${({ theme }) => theme.colors.helper};
+:hover {
+border-radius: 3px;
+ background: #21262dc5;
+ }
+}
+       
+      }
     }
 
     @media (max-width: ${({ theme }) => theme.media.mobile}) {
@@ -215,15 +314,49 @@ const Nav = () => {
                 Contact
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/login"
-                className="navbar-link home-link"
-                onClick={() => setMenuIcon(false)}
-              >
-                <Button className="btn-login">Log In</Button>
-              </NavLink>
-            </li>
+            {token ? (
+              <li className="profile" onClick={handleProfile}>
+              <span style={{fontSize:"14px",textTransform:"capitalize"}}>Hi {apiData?.firstname ||apiData?.username}</span>
+                <img
+                  src={apiData?.profile}
+                  alt="user"
+                  className="profile-img"
+                />
+                {profileCard && <div className="cardContainer">
+                  <div className="card">
+                  <NavLink to="/profile" style={{width:"100%"}}>
+                  <button className="card-btn" >
+                  <RiAccountCircleLine/> Profile
+                  </button>
+                  </NavLink>
+                  <NavLink
+                  // to="/login"
+                  style={{width:"100%"}}
+                  className=""
+                  onClick={() => {
+                    setMenuIcon(false);
+                    handleLogout();
+                  }}
+                >
+                  <button className="log-btn"><PiSignOut /> Logout</button>
+                </NavLink>
+                  </div>
+                </div>}
+                
+                
+              </li>
+            ) : (
+              <li>
+                <NavLink
+                  to="/login"
+                  className="navbar-link home-link"
+                  onClick={() => setMenuIcon(false)}
+                >
+                  <Button className="btn-login">Log In</Button>
+                </NavLink>
+              </li>
+            )}
+
             {/* <li>
               <NavLink
                 to="/Login"
@@ -240,7 +373,9 @@ const Nav = () => {
                 onClick={() => setMenuIcon(false)}
               >
                 <FiShoppingCart className="cart-icon" />
-                <span className="cart-total--item">{total_item}</span>
+                <span className="cart-total--item">
+                  {cart !== null ? cart.length : 0}
+                </span>
               </NavLink>
             </li>
           </ul>

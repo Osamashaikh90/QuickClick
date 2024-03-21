@@ -167,16 +167,19 @@ const verifyOTP = async (req, res) => {
 const createResetSession = async (req, res) => {
   if(req.app.locals.resetSession){
   req.app.locals.resetSession = false
-  return res.status(201).send({msg:"Access granted!"})
+  return res.status(201).send({flag:req.app.locals.resetSession})
   }
   return res.status(440).send({error:"Session Expired!"});
 };
 
+
 const resetPassword = async (req, res) => {
   try {
 
+  
     //we are allowed to reset the password during the session only
-    if(!read.app.locals.resetSession) return res.status(440).send({error:"Session Expired!"});
+if (!req.app.locals.resetSession) return res.status(440).send({ error: "Session Expired!" });
+
     const { username, password } = req.body;
 
     // Find user by username

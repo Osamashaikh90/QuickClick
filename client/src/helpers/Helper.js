@@ -1,14 +1,17 @@
 import axios from "axios";
-// const jwt_decode = require("jwt-decode");
+import { jwtDecode } from "jwt-decode";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 /** To get username from Token */
-// export async function getUsername(){
-//   const token = localStorage.getItem('token');
-//   if(!token) return Promise.reject("Cannot find Token");
-//   let decode = jwt_decode(token);
-//   return decode;
-// }
+export const  getUsername =  async ()=>{
+  const token = localStorage.getItem("token");
+  if(!token) return Promise.reject("Cannot find Token");
+  let decode = jwtDecode(token);
+  console.log(decode)
+  return decode;
+}
+
+
 //authenticate function
 export const authenticate = async (username) => {
   try {
@@ -88,8 +91,9 @@ export const updateUser = async (response) => {
     //get the
     const token = localStorage.getItem("token");
     const data = await axios.put("auth/updateUser", response, {
-      headers: { Authorization: `Bearer${token}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
+    console.log("user updated:",{data});
     return Promise.resolve({ data });
   } catch (error) {
     return Promise.reject({ error: "Coudn't Update Profile...!" });
